@@ -5,7 +5,7 @@ import subprocess
 import os
 import requests
 from urllib.parse import urljoin
-
+import sqlite3
 server_id = 665189315877535753
 
 server_id = int(server_id)
