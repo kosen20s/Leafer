@@ -25,15 +25,17 @@ async def on_message(message):
     grass = cc.content
     baseurl = "https://github.com"
     url = urljoin(baseurl, grass)
-    command = '/usr/bin/curl {url} | awk \'/<svg.+class=\"js-calendar-graph-svg\"/,/svg>/\' | sed -e \'s/<svg/<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\"/\' > test.svg'
+    grass_image_name = grass + ".svg"
+    command = '/usr/bin/curl {url} | awk \'/<svg.+class=\"js-calendar-graph-svg\"/,/svg>/\' | sed -e \'s/<svg/<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\"/\''
+    command = command + ">" + grass_image_name
     command = command.format(url=url)
     print(command)
     grass_image = os.system(command)
-    grass_image_name = grass + ".svg"
-    grass_image = str(grass_image)
-    f = open(grass_image_name, "w")
-    f.write(grass_image)
-    f.close()
+    # grass_image_name = grass + ".svg"
+    # grass_image = str(grass_image)
+    # f = open(grass_image_name, "w")
+    # f.write(grass_image)
+    # f.close()
     grass_convert_fname = "--output=" + grass + ".png"
     subprocess.run(["rsvg-convert", "--format=png",  grass_image_name, grass_convert_fname])
     uname = message.author.id
