@@ -32,6 +32,8 @@ async def on_message(message):
     f = open(grass_image_name, "w")
     f.write(grass_image)
     f.close()
+    grass_convert_fname = grass + ".png"
+    subprocess.check_output(["convert", grass_image_name, grass_convert_fname])
     if message.content == '草':
 
 
