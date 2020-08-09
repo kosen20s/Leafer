@@ -52,8 +52,13 @@ async def on_message(message):
         print(select_sql)
         c.execute(select_sql)
         result=c.fetchone()
-        print(result)
-        
+        # print(result)
+        # DBから出てきたデータは16桁のIDが最初にあるので17文字目まで切り捨てることができる
+        # m = result.decode()
+        # print(result)
+        img_name = result[1]
+        await message.channel.send(file=discord.File(img_name))
+        print(result[1])
 
 
 if __name__ == "__main__":
