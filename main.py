@@ -39,6 +39,7 @@ async def on_message(message):
     grass_convert_fname = "--output=" + grass + ".png"
     subprocess.run(["rsvg-convert", "--format=png",  grass_image_name, grass_convert_fname])
     uname = message.author.id
+    grass_convert_fname = grass + ".png"
     sql = 'insert into grass (username, filename) values (?,?)'
     namelist = (uname, grass_convert_fname)
     c.execute(sql, namelist)
@@ -46,13 +47,14 @@ async def on_message(message):
     if message.content == '草':
         user_name = message.author.id
         select_sql = 'select * from grass where username='
-        username = ('{user_name}')
+        username = ('{user_name}').format(user_name=user_name)
         select_sql = select_sql + username
+        print(select_sql)
         c.execute(select_sql)
         result=c.fetchone()
-        
+        print(result)
         
 
 
 if __name__ == "__main__":
-    client.run()
+    client.run("")
