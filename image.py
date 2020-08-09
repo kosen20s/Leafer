@@ -21,4 +21,4 @@ async def on_message(message):
         img_name = result[1]
         await message.channel.send(file=discord.File(img_name))
 
-client.run("")
+    client.run(os.environ['LEAF_TOKEN'])

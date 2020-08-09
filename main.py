@@ -35,6 +35,7 @@ async def on_message(message):
     subprocess.run(["rsvg-convert", "--format=png",  grass_image_name, grass_convert_fname])
     uname = message.author.id
     grass_convert_fname = grass + ".png"
+    os.remove(grass_convert_fname)
     sql = 'insert into grass (username, filename) values (?,?)'
     namelist = (uname, grass_convert_fname)
     c.execute(sql, namelist)
