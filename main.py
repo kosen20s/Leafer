@@ -31,11 +31,6 @@ async def on_message(message):
     command = command.format(url=url)
     print(command)
     grass_image = os.system(command)
-    # grass_image_name = grass + ".svg"
-    # grass_image = str(grass_image)
-    # f = open(grass_image_name, "w")
-    # f.write(grass_image)
-    # f.close()
     grass_convert_fname = "--output=" + grass + ".png"
     subprocess.run(["rsvg-convert", "--format=png",  grass_image_name, grass_convert_fname])
     uname = message.author.id
@@ -44,22 +39,22 @@ async def on_message(message):
     namelist = (uname, grass_convert_fname)
     c.execute(sql, namelist)
     conn.commit()
-    if message.content == '草':
-        user_name = message.author.id
-        select_sql = 'select * from grass where username='
-        username = ('{user_name}').format(user_name=user_name)
-        select_sql = select_sql + username
-        print(select_sql)
-        c.execute(select_sql)
-        result=c.fetchone()
-        # print(result)
-        # DBから出てきたデータは16桁のIDが最初にあるので17文字目まで切り捨てることができる
-        # m = result.decode()
-        # print(result)
-        img_name = result[1]
-        await message.channel.send(file=discord.File(img_name))
-        print(result[1])
+    # if message.content == '草':
+    #     user_name = message.author.id
+    #     select_sql = 'select * from grass where username='
+    #     username = ('{user_name}').format(user_name=user_name)
+    #     select_sql = select_sql + username
+    #     print(select_sql)
+    #     c.execute(select_sql)
+    #     result=c.fetchone()
+    #     # print(result)
+    #     # DBから出てきたデータは16桁のIDが最初にあるので17文字目まで切り捨てることができる
+    #     # m = result.decode()
+    #     # print(result)
+    #     img_name = result[1]
+    #     await message.channel.send(file=discord.File(img_name))
+    #     print(result[1])
 
 
 if __name__ == "__main__":
-    client.run("")
+    client.run(os.environ['LEAF_TOKEN'])
