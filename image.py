@@ -17,8 +17,9 @@ async def on_message(message):
         select_sql = select_sql + username
         print(select_sql)
         c.execute(select_sql)
-        result=c.fetchone()
+        result = c.fetchone()
         img_name = result[1]
+        img_name = "./images/" + img_name
         await message.channel.send(file=discord.File(img_name))
-
+if __name__ == "__main__":
     client.run(os.environ['LEAF_TOKEN'])
