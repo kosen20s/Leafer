@@ -2,7 +2,7 @@ import glob
 import os
 import subprocess
 from urllib.parse import urljoin
-# os.system("rm ./*.png")
+os.system("rm ./*.png")
 
 files = glob.glob("./*.svg")
 path = os.getcwd()  
@@ -28,4 +28,4 @@ for name in files:
     print(grass_convert_fname)
     print(grass_image_name)
     subprocess.run(["rsvg-convert", "--format=png",  grass_convert_fname, grass_image_name])
-    os.system("rm ./*.png.png")
+    # os.system("rm ./*.png.png")
