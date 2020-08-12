@@ -14,7 +14,7 @@ for name in files:
         continue
     if name == ("*.png"):
         continue
-    if name == ("*.sh"):
+    if name == ("ref.sh"):
         continue
     baseurl = "https://github.com"
     n = name
