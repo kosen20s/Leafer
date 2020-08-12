@@ -15,6 +15,7 @@ for name in files:
     if name == ("*.png"):
         continue
     if name == ("*.sh"):
+        continue
     baseurl = "https://github.com"
     n = name
     name = name.replace(".svg", '') #ファイル名を取り除く
