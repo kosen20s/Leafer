@@ -33,6 +33,9 @@ async def on_message(message):
         result = c.fetchone()
         img_name = result[1]
         img_name = "./images/" + img_name
+        img_name_n = img_name.replace(".png","")
+        await message.channel.send(img_name_n)
         await message.channel.send(file=discord.File(img_name))
+        
 if __name__ == "__main__":
     client.run(os.environ['LEAF_TOKEN'])
