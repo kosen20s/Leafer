@@ -53,6 +53,23 @@ async def on_message(message):
         else:
             await message.channel.send("存在していないuserです\n最初からやり直してください")
             return
-
+    if message.content == '!leaf remove':
+        user_name = message.author.id
+        select_sql = 'select * from grass where username='
+        select_sql = str(select_sql)
+        user_name = str(user_name)
+        username = ('{user_name}').format(user_name=user_name)
+        select_sql = select_sql + user_name
+        print(select_sql)
+        c.execute(select_sql)
+        result = c.fetchone()
+        img_name = result[1]
+        img_name = "./images/" + img_name
+        rm = "rm " + img_name
+        os.system(rm)
+        sql = 'delete from grass where username=' + username
+        c.execute(sql)
+        conn.commit()
+        await message.channel.send("削除が完了しました")
 if __name__ == "__main__":
     client.run(os.environ['LEAF_TOKEN'])
