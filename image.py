@@ -34,6 +34,7 @@ async def on_message(message):
         img_name = result[1]
         img_name = "./images/" + img_name
         img_name_n = img_name.replace(".png","")
+        img_name_n = img_name_n.replace("./images/","")
         await message.channel.send(img_name_n)
         await message.channel.send(file=discord.File(img_name))
         
