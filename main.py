@@ -7,11 +7,9 @@ import requests
 from urllib.parse import urljoin
 import sqlite3
 client = discord.Client()
-conn = sqlite3.connect('grass.db')
-c = conn.cursor()
+connect = sqlite3.connect('grass.db')
+c = connect.cursor()
 
-async def send(channel,*args, **kwargs): return await channel.send(*args, **kwargs)
- 
 @client.event
 async def on_message(message):
     if message.author.bot:
@@ -21,9 +19,9 @@ async def on_message(message):
 
         def check(command):
             return command.author == message.author
-        cc = await client.wait_for("message", check=check)
+        return_message = await client.wait_for("message", check=check)
 
-        grass = cc.content
+        grass = return_message.content
         grass = str(grass)
         grass = grass.lower()
         grass = str(grass)
@@ -49,7 +47,7 @@ async def on_message(message):
             sql = 'insert into grass (username, filename) values (?,?)'
             namelist = (uname, grass_convert_fname)
             c.execute(sql, namelist)
-            conn.commit()
+            connect.commit()
         else:
             await message.channel.send("存在していないuserです\n最初からやり直してください")
             return
@@ -69,7 +67,7 @@ async def on_message(message):
         os.system(rm)
         sql = 'delete from grass where username=' + username
         c.execute(sql)
-        conn.commit()
+        connect.commit()
         await message.channel.send("削除が完了しました")
 if __name__ == "__main__":
     client.run(os.environ['LEAF_TOKEN'])
