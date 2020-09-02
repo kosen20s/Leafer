@@ -9,6 +9,7 @@ import sqlite3
 client = discord.Client()
 connection = sqlite3.connect('grass.db')
 cursor = connection.cursor()
+BASEURL = "https://github.com"
 
 async def send(channel,*args, **kwargs): return await channel.send(*args, **kwargs)
  
@@ -21,15 +22,12 @@ async def on_message(message):
 
         def check(command):
             return command.author == message.author
+
         reply = await client.wait_for("message", check=check)
 
-        grass = cc.content
-        grass = str(grass)
-        grass = grass.lower()
-        grass = str(grass)
-        baseurl = "https://github.com"
-        baseurl = str(baseurl)
-        url = urljoin(baseurl, grass)
+        grass = reply.content.lower()
+
+        url = urljoin(BASEURL, grass)
         req = requests.get(url)
         print(url)
         print(req)
