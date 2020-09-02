@@ -28,23 +28,24 @@ async def on_message(message):
         reply = await client.wait_for("message", check=check)
 
         grass = reply.content.lower()
-
         url = urljoin(BASEURL, grass)
         req = requests.get(url)
         print(url)
         print(req)
         if req.status_code == requests.codes.ok:
-            grass_image_name = grass + ".svg"
-            command = COMMAND_BASE.format(url=url) + grass_image_name
+            image_name = grass + ".svg"
+            command = COMMAND_BASE.format(url=url) + image_name
             print(command)
-            grass_image = os.system(command)
-            grass_image_name = "./images/" + grass_image_name
-            grass_convert_fname = "--output=" + "./images/" +grass + ".png"
-            subprocess.run(["rsvg-convert", "--format=png",  grass_image_name, grass_convert_fname])
-            uname = message.author.id
-            grass_convert_fname = grass + ".png"
+            os.system(command)
+
+            file_name = "./images/" + image_name
+            converted_file_output = "--output=" + "./images/" + grass + ".png"
+            user_id = message.author.id
+            subprocess.run(["rsvg-convert", "--format=png",  file_name, converted_file_output])
+
+            converted_file_name = grass + ".png"
             sql = 'insert into grass (username, filename) values (?,?)'
-            namelist = (uname, grass_convert_fname)
+            namelist = (user_id, converted_file_name)
             cursor.execute(sql, namelist)
             connection.commit()
         else:
