@@ -7,8 +7,8 @@ import requests
 from urllib.parse import urljoin
 import sqlite3
 client = discord.Client()
-conn = sqlite3.connect('grass.db')
-c = conn.cursor()
+connection = sqlite3.connect('grass.db')
+cursor = connection.cursor()
 
 async def send(channel,*args, **kwargs): return await channel.send(*args, **kwargs)
  
@@ -21,7 +21,7 @@ async def on_message(message):
 
         def check(command):
             return command.author == message.author
-        cc = await client.wait_for("message", check=check)
+        reply = await client.wait_for("message", check=check)
 
         grass = cc.content
         grass = str(grass)
@@ -48,8 +48,8 @@ async def on_message(message):
             #os.remoremove(grass_convert_fname)
             sql = 'insert into grass (username, filename) values (?,?)'
             namelist = (uname, grass_convert_fname)
-            c.execute(sql, namelist)
-            conn.commit()
+            cursor.execute(sql, namelist)
+            connection.commit()
         else:
             await message.channel.send("存在していないuserです\n最初からやり直してください")
             return
@@ -61,15 +61,16 @@ async def on_message(message):
         username = ('{user_name}').format(user_name=user_name)
         select_sql = select_sql + user_name
         print(select_sql)
-        c.execute(select_sql)
-        result = c.fetchone()
+        cursor.execute(select_sql)
+        result = cursor.fetchone()
         img_name = result[1]
         img_name = "./images/" + img_name
         rm = "rm " + img_name
         os.system(rm)
         sql = 'delete from grass where username=' + username
-        c.execute(sql)
-        conn.commit()
+        cursor.execute(sql)
+        connection.commit()
         await message.channel.send("削除が完了しました")
+
 if __name__ == "__main__":
     client.run(os.environ['LEAF_TOKEN'])
