@@ -43,14 +43,14 @@ async def on_message(message):
             subprocess.run(["rsvg-convert", "--format=png",  grass_image_name, grass_convert_fname])
             uname = message.author.id
             grass_convert_fname = grass + ".png"
-            #os.remoremove(grass_convert_fname)
             sql = 'insert into grass (username, filename) values (?,?)'
             namelist = (uname, grass_convert_fname)
             cursor.execute(sql, namelist)
             connection.commit()
         else:
             await message.channel.send("存在していないuserです\n最初からやり直してください")
-            return
+        return
+
     if message.content == '!leaf remove':
         user_name = message.author.id
         select_sql = 'select * from grass where username='
