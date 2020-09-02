@@ -13,8 +13,6 @@ BASEURL = "https://github.com"
 
 COMMAND_BASE = "/usr/bin/curl '{url}' | awk '/<svg.+class=\"js-calendar-graph-svg\"/,/svg>/' | sed -e 's/<svg/<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\"/'>./images/"
 
-async def send(channel,*args, **kwargs): return await channel.send(*args, **kwargs)
- 
 @client.event
 async def on_message(message):
     if message.author.bot:
