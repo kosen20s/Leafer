@@ -53,21 +53,16 @@ async def on_message(message):
         return
 
     if message.content == '!leaf remove':
-        user_name = message.author.id
-        select_sql = 'select * from grass where username='
-        select_sql = str(select_sql)
-        user_name = str(user_name)
-        username = ('{user_name}').format(user_name=user_name)
-        select_sql = select_sql + user_name
+        username = str(message.author.id)
+        select_sql = 'select * from grass where username=' + username
         print(select_sql)
         cursor.execute(select_sql)
         result = cursor.fetchone()
-        img_name = result[1]
-        img_name = "./images/" + img_name
+        img_name = "./images/" + img_name[1]
         rm = "rm " + img_name
         os.system(rm)
-        sql = 'delete from grass where username=' + username
-        cursor.execute(sql)
+        delete_sql = 'delete from grass where username=' + username
+        cursor.execute(delete_sql)
         connection.commit()
         await message.channel.send("削除が完了しました")
 
