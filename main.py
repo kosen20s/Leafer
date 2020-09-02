@@ -11,6 +11,8 @@ connection = sqlite3.connect('grass.db')
 cursor = connection.cursor()
 BASEURL = "https://github.com"
 
+COMMAND_BASE = "/usr/bin/curl '{url}' | awk '/<svg.+class=\"js-calendar-graph-svg\"/,/svg>/' | sed -e 's/<svg/<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\"/'>./images/"
+
 async def send(channel,*args, **kwargs): return await channel.send(*args, **kwargs)
  
 @client.event
@@ -33,9 +35,7 @@ async def on_message(message):
         print(req)
         if req.status_code == requests.codes.ok:
             grass_image_name = grass + ".svg"
-            command = '/usr/bin/curl {url} | awk \'/<svg.+class=\"js-calendar-graph-svg\"/,/svg>/\' | sed -e \'s/<svg/<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\"/\''
-            command = command + ">" + "./images/" + grass_image_name
-            command = command.format(url=url)
+            command = COMMAND_BASE.format(url=url) + grass_image_name
             print(command)
             grass_image = os.system(command)
             grass_image_name = "./images/" + grass_image_name
