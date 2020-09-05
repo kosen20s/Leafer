@@ -9,7 +9,7 @@ import sqlite3
 client = discord.Client()
 BASEURL = "https://github.com"
 
-COMMAND_BASE = "/usr/bin/curl '{url}' | awk '/<svg.+class=\"js-calendar-graph-svg\"/,/svg>/' | sed -e 's/<svg/<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\"/'>./images/"
+COMMAND_BASE = '/usr/bin/curl \'{url}\' | awk \'/<svg.+class="js-calendar-graph-svg"/,/svg>/\' | sed -E \'s|<svg|<svg xmlns="http://www.w3.org/2000/svg"|; s|\<g (transform="[^"]*")[^<>]*>|<g \\1>|; s| data-count="[^"]*" data-date="[^"]*"/>| shape-rendering="geometricPrecision" rx="2" ry="2" stroke="rgb(27,31,35)" stroke-opacity="0.04" stroke-width="1"/>|; s|<text|<text font-family="sans-serif" font-size="10px" fill="#767676"|\' > ./images/'
 @client.event
 async def on_message(message):
     if message.author.bot:
