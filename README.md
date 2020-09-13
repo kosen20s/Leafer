@@ -1,1 +1,5 @@
-filename = user.id
+# **_Leafer_**
+
+限界開発鯖おなじみの草ボットの Python 実装  
+使用する場合は grass.db を作成し(sqlite3 を使用します)  
+マイグレーションを各自でお願いします
