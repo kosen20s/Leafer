@@ -7,5 +7,5 @@
 マイグレーションを各自でお願いします
 
 ## Commands
-`!leaf set` Get grass image from GitHub
+`!leaf set` Get grass image from GitHub  
 `!leaf remove` Remove image
